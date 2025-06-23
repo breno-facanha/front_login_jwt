@@ -1,10 +1,11 @@
 import instance from "@/instance/api";
 import { useEffect, useState } from "react";
 import Header from "../Header";
+import SideMenu from "../SideMenu";
 
 function Spinner() {
   return (
-    <div style={{ textAlign: 'center', marginTop: 40 }}>
+    <div style={{ textAlign: "center", marginTop: 40 }}>
       <div className="spinner" />
       <style>{`
         .spinner {
@@ -29,19 +30,19 @@ export default function PageWrapper({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      window.location.href = '/';
+      window.location.href = "/";
       return;
     }
 
     async function heartBeat() {
       try {
-        await instance.get('/heartbeat');
+        await instance.get("/heartbeat");
         setIsLoading(false);
       } catch (error) {
-        localStorage.removeItem('token');
-        window.location.href = '/';
+        localStorage.removeItem("token");
+        window.location.href = "/";
       }
     }
     heartBeat();
@@ -50,8 +51,9 @@ export default function PageWrapper({ children }) {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="w-full min-h-screen flex flex-col"> 
-      <Header />
+      <div className="w-full min-h-screen flex flex-col">
+        {/* <Header /> */}
+        <SideMenu />
       <div className="w-full h-full pt-18 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen">
         {children}
       </div>
